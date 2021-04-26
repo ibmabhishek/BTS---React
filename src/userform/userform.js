@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
+import Userlist from '../userlist/userlist';
 
 function Userform() { //Component, Controller
     //model
@@ -8,6 +9,7 @@ function Userform() { //Component, Controller
         mobileNumber: "1"
 
     })
+    const [users, setUsers] = useState([{ name: 'Abhishek', mobileNumber: 234 }]);
     // const save(){
 
     // }
@@ -17,6 +19,7 @@ function Userform() { //Component, Controller
             .post('http://localhost:8080/user', userform)
             .then(function (response) {
                 console.log(response);
+
             })
             .catch(function (error) {
                 console.log(error);
@@ -29,6 +32,7 @@ function Userform() { //Component, Controller
             <input value={userform.mobileNumber} name='mobileNumber' placeholder='Enter the mobile  number' onChange={updateState}></input>
 
             <button onClick={save} >Save</button>
+            <Userlist usersProp={users}></Userlist>
         </div>
     )
 
@@ -36,7 +40,10 @@ function Userform() { //Component, Controller
 
     function updateState(event) {
         //console.log(event);
-        const current = { ...userform, [event.target.name]: event.target.value };
+        const current = {
+            ...userform //spread operator
+            , [event.target.name]: event.target.value
+        };
         console.log(current);
         setUserform(current);
 
